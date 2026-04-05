@@ -1,0 +1,93 @@
+Deleting directory C:\Users\DIPTISH\.gradle\wrapper\dists\gradle-8.14-all\c2qonpi39x1mddn7hk5gh9iqj\gradle-8.14
+Unzipping C:\Users\DIPTISH\.gradle\wrapper\dists\gradle-8.14-all\c2qonpi39x1mddn7hk5gh9iqj\gradle-8.14-all.zip to C:\Users\DIPTISH\.gradle\wrapper\dists\gradle-8.14-all\c2qonpi39x1mddn7hk5gh9iqj
+
+Welcome to Gradle 8.14!
+
+Here are the highlights of this release:
+ - Java 24 support
+ - GraalVM Native Image toolchain selection
+ - Enhancements to test reporting
+ - Build Authoring improvements
+
+For more details see https://docs.gradle.org/8.14/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+[Incubating] Problems report is available at: file:///D:/repo/DiPS_bucket_list/buy_planner/android/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Settings file 'D:\repo\DiPS_bucket_list\buy_planner\android\settings.gradle.kts' line: 20
+
+* What went wrong:
+Error resolving plugin [id: 'dev.flutter.flutter-plugin-loader', version: '1.0.0']
+> A problem occurred configuring project ':gradle'.
+   > Could not resolve all artifacts for configuration 'classpath'.
+      > Could not resolve org.jetbrains:annotations:13.0.
+        Required by:
+            project :gradle
+         > Could not resolve org.jetbrains:annotations:13.0.
+            > Could not get resource 'https://plugins.gradle.org/m2/org/jetbrains/annotations/13.0/annotations-13.0.pom'.
+               > Could not GET 'https://plugins.gradle.org/m2/org/jetbrains/annotations/13.0/annotations-13.0.pom'.
+                  > plugins.gradle.org
+      > Could not resolve com.google.code.gson:gson:2.8.9.
+        Required by:
+            project :gradle > org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21 > org.jetbrains.kotlin:kotlin-build-statistics:2.0.21
+         > Could not resolve com.google.code.gson:gson:2.8.9.
+            > Could not get resource 'https://plugins.gradle.org/m2/com/google/code/gson/gson/2.8.9/gson-2.8.9.pom'.
+               > Could not GET 'https://plugins.gradle.org/m2/com/google/code/gson/gson/2.8.9/gson-2.8.9.pom'.
+                  > plugins.gradle.org
+      > Could not resolve org.jetbrains.kotlin:kotlin-daemon-client:2.0.21.
+        Required by:
+            project :gradle > org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21 > org.jetbrains.kotlin:kotlin-compiler-runner:2.0.21
+         > Could not resolve org.jetbrains.kotlin:kotlin-daemon-client:2.0.21.
+            > Could not get resource 'https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-daemon-client/2.0.21/kotlin-daemon-client-2.0.21.pom'.
+               > Could not GET 'https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-daemon-client/2.0.21/kotlin-daemon-client-2.0.21.pom'.
+                  > plugins.gradle.org
+      > Could not resolve org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4.
+        Required by:
+            project :gradle > org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21 > org.jetbrains.kotlin:kotlin-compiler-runner:2.0.21
+            project :gradle > org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21 > org.jetbrains.kotlin:kotlin-compiler-embeddable:2.0.21
+         > Could not resolve org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4.
+            > Could not get resource 'https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.4/kotlinx-coroutines-core-jvm-1.6.4.pom'.
+               > Could not GET 'https://plugins.gradle.org/m2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.4/kotlinx-coroutines-core-jvm-1.6.4.pom'.
+                  > plugins.gradle.org
+      > Could not resolve org.jetbrains.kotlin:kotlin-util-io:2.0.21.
+        Required by:
+            project :gradle > org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21 > org.jetbrains.kotlin:kotlin-util-klib:2.0.21
+            project :gradle > org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin:5.2.0 > org.gradle.kotlin:gradle-kotlin-dsl-plugins:5.2.0 > org.jetbrains.kotlin:kotlin-gradle-plugin-api:2.0.21 > org.jetbrains.kotlin:kotlin-native-utils:2.0.21
+         > Could not resolve org.jetbrains.kotlin:kotlin-util-io:2.0.21.
+            > Could not get resource 'https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-util-io/2.0.21/kotlin-util-io-2.0.21.pom'.
+               > Could not GET 'https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-util-io/2.0.21/kotlin-util-io-2.0.21.pom'.
+                  > plugins.gradle.org
+      > Could not resolve org.jetbrains.kotlin:kotlin-daemon-embeddable:2.0.21.
+        Required by:
+            project :gradle > org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21 > org.jetbrains.kotlin:kotlin-compiler-embeddable:2.0.21
+         > Could not resolve org.jetbrains.kotlin:kotlin-daemon-embeddable:2.0.21.
+            > Could not get resource 'https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-daemon-embeddable/2.0.21/kotlin-daemon-embeddable-2.0.21.pom'.
+               > Could not GET 'https://plugins.gradle.org/m2/org/jetbrains/kotlin/kotlin-daemon-embeddable/2.0.21/kotlin-daemon-embeddable-2.0.21.pom'.
+                  > plugins.gradle.org
+      > Could not resolve org.jetbrains.intellij.deps:trove4j:1.0.20200330.
+        Required by:
+            project :gradle > org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.9.20 > org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21 > org.jetbrains.kotlin:kotlin-compiler-embeddable:2.0.21
+         > Could not resolve org.jetbrains.intellij.deps:trove4j:1.0.20200330.
+            > Could not get resource 'https://plugins.gradle.org/m2/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.pom'.
+               > Could not GET 'https://plugins.gradle.org/m2/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.pom'.
+                  > plugins.gradle.org
+> There is 1 more failure with an identical cause.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 3m 30s
