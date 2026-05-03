@@ -215,14 +215,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 40),
             child: Column(children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset('assets/empty_doodle.png', width: 180, height: 180, fit: BoxFit.cover),
-              ),
+              Icon(Icons.flag_outlined, size: 64, color: Colors.grey.shade300),
               const SizedBox(height: 16),
               const Text('No goals yet!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Color(0xFF1A1A24))),
               const SizedBox(height: 6),
-              const Text('Tap + to start saving for something awesome', style: TextStyle(fontSize: 13, color: Color(0xFF8A8A9E), fontWeight: FontWeight.w600)),
+              const Text('Tap + to start saving for something', style: TextStyle(fontSize: 13, color: Color(0xFF8A8A9E), fontWeight: FontWeight.w600)),
             ]),
           ),
         const SizedBox(height: 6),
@@ -266,10 +263,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Padding(
           padding: const EdgeInsets.only(top: 40),
           child: Column(children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset('assets/completed_doodle.png', width: 180, height: 180, fit: BoxFit.cover),
-            ),
+            Icon(Icons.emoji_events_outlined, size: 64, color: Colors.grey.shade300),
             const SizedBox(height: 16),
             const Text('Nothing here yet!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Color(0xFF1A1A24))),
             const SizedBox(height: 6),
