@@ -18,40 +18,39 @@ class BuyPlannerApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => BuyProvider()),
       ],
-      child: MaterialApp(
-        title: 'Trezo Planner',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          brightness: Brightness.light,
-          scaffoldBackgroundColor: const Color(0xFFF8F9FA),
-          primaryColor: const Color(0xFF5C58FF),
-          colorScheme: const ColorScheme.light(
-            primary: Color(0xFF5C58FF),
-            secondary: Color(0xFF5C58FF),
-            surface: Colors.white,
-          ),
-          textTheme: GoogleFonts.outfitTextTheme(ThemeData.light().textTheme),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xFFF8F9FA),
-            elevation: 0,
-            iconTheme: IconThemeData(color: Color(0xFF1A1A24)),
-          ),
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Color(0xFF5C58FF),
-            foregroundColor: Colors.white,
-            elevation: 4,
-            shape: CircleBorder(),
-          ),
-          bottomSheetTheme: const BottomSheetThemeData(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      child: Consumer<BuyProvider>(
+        builder: (context, provider, _) {
+          return MaterialApp(
+            title: 'DiPS Bucket List',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              useMaterial3: true,
+              brightness: Brightness.light,
+              scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+              primaryColor: const Color(0xFFFF6D3B),
+              colorScheme: const ColorScheme.light(
+                primary: Color(0xFFFF6D3B),
+                secondary: Color(0xFFFF6D3B),
+                surface: Colors.white,
+              ),
+              textTheme: GoogleFonts.outfitTextTheme(ThemeData.light().textTheme),
             ),
-          ),
-        ),
-        home: const DashboardScreen(),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              brightness: Brightness.dark,
+              scaffoldBackgroundColor: const Color(0xFF121212),
+              primaryColor: const Color(0xFFFF6D3B),
+              colorScheme: const ColorScheme.dark(
+                primary: Color(0xFFFF6D3B),
+                secondary: Color(0xFFFF6D3B),
+                surface: Color(0xFF1E1E1E),
+              ),
+              textTheme: GoogleFonts.outfitTextTheme(ThemeData.dark().textTheme),
+            ),
+            themeMode: provider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            home: const DashboardScreen(),
+          );
+        },
       ),
     );
   }

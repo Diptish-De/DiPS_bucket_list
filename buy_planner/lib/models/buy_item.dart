@@ -1,17 +1,52 @@
 import 'dart:convert';
 
+class FundEntry {
+  final double amount;
+  final DateTime date;
+
+  FundEntry({required this.amount, required this.date});
+
+  Map<String, dynamic> toMap() => {
+    'amount': amount,
+    'date': date.toIso8601String(),
+  };
+
+  factory FundEntry.fromMap(Map<String, dynamic> map) => FundEntry(
+    amount: (map['amount'] as num).toDouble(),
+    date: DateTime.parse(map['date']),
+  );
+}
+
 class BuyItem {
   final String id;
   String name;
   double price;
   double savedAmount;
+  String category;
+  DateTime? targetDate;
+  DateTime createdAt;
+  List<FundEntry> fundHistory;
 
   BuyItem({
     required this.id,
     required this.name,
     required this.price,
     this.savedAmount = 0.0,
-  });
+    this.category = 'Other',
+    this.targetDate,
+    DateTime? createdAt,
+    List<FundEntry>? fundHistory,
+  }) : createdAt = createdAt ?? DateTime.now(),
+       fundHistory = fundHistory ?? [];
+
+  bool get isCompleted => savedAmount >= price;
+
+  double get progress => price > 0 ? (savedAmount / price).clamp(0.0, 1.0) : 0.0;
+
+  int? get daysLeft {
+    if (targetDate == null) return null;
+    return targetDate!.difference(DateTime.now()).inDays;
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -19,6 +54,10 @@ class BuyItem {
       'name': name,
       'price': price,
       'savedAmount': savedAmount,
+      'category': category,
+      'targetDate': targetDate?.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'fundHistory': fundHistory.map((e) => e.toMap()).toList(),
     };
   }
 
@@ -26,8 +65,14 @@ class BuyItem {
     return BuyItem(
       id: map['id'],
       name: map['name'],
-      price: map['price'],
-      savedAmount: map['savedAmount'] ?? 0.0,
+      price: (map['price'] as num).toDouble(),
+      savedAmount: (map['savedAmount'] as num?)?.toDouble() ?? 0.0,
+      category: map['category'] ?? 'Other',
+      targetDate: map['targetDate'] != null ? DateTime.parse(map['targetDate']) : null,
+      createdAt: map['createdAt'] != null ? DateTime.parse(map['createdAt']) : DateTime.now(),
+      fundHistory: map['fundHistory'] != null
+          ? (map['fundHistory'] as List).map((e) => FundEntry.fromMap(e)).toList()
+          : [],
     );
   }
 
