@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/buy_provider.dart';
 import '../models/buy_item.dart';
 import 'package:intl/intl.dart';
+import '../utils/currency_formatter.dart';
 
 class AddFundsSheet extends StatefulWidget {
   final BuyItem item;
@@ -17,7 +18,7 @@ class _AddFundsSheetState extends State<AddFundsSheet> {
   final _presets = [100, 500, 1000, 2000, 5000];
 
   void _submit() {
-    final amount = double.tryParse(_amountController.text) ?? 0.0;
+    final amount = parseCurrencyInput(_amountController.text);
     if (amount <= 0) return;
     final justCompleted = Provider.of<BuyProvider>(context, listen: false).addFunds(widget.item.id, amount);
     Navigator.pop(context, justCompleted);
@@ -72,7 +73,7 @@ class _AddFundsSheetState extends State<AddFundsSheet> {
                 focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFFFF6D3B), width: 1.5)),
                 prefixText: '₹ ', prefixStyle: const TextStyle(color: Color(0xFF1A1A24), fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              keyboardType: TextInputType.number, onSubmitted: (_) => _submit(),
+              keyboardType: TextInputType.number, inputFormatters: [CurrencyInputFormatter()], onSubmitted: (_) => _submit(),
             ),
             const SizedBox(height: 24),
             Row(children: [

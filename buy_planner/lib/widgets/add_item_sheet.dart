@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/buy_provider.dart';
 import '../utils/categories.dart';
+import '../utils/currency_formatter.dart';
 
 class AddItemSheet extends StatefulWidget {
   const AddItemSheet({super.key});
@@ -18,7 +19,7 @@ class _AddItemSheetState extends State<AddItemSheet> {
 
   void _submit() {
     final name = _nameController.text.trim();
-    final price = double.tryParse(_priceController.text) ?? 0.0;
+    final price = parseCurrencyInput(_priceController.text);
 
     if (name.isEmpty || price <= 0) return;
 
@@ -113,6 +114,7 @@ class _AddItemSheetState extends State<AddItemSheet> {
                 prefixStyle: const TextStyle(color: Color(0xFF1A1A24), fontSize: 16, fontWeight: FontWeight.bold),
               ),
               keyboardType: TextInputType.number,
+              inputFormatters: [CurrencyInputFormatter()],
             ),
             const SizedBox(height: 20),
 
