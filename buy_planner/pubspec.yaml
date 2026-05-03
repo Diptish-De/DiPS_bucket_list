@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_native_splash: ^2.4.7
   google_fonts: ^8.0.2
   intl: ^0.20.2
   provider: ^6.1.5+1
@@ -23,3 +24,12 @@ flutter:
   uses-material-design: true
   assets:
     - dips-img.png
+
+flutter_native_splash:
+  color: "#1E1E1E"
+  image: dips-img.png
+  color_dark: "#1E1E1E"
+  image_dark: dips-img.png
+  android_12:
+    color: "#1E1E1E"
+    color_dark: "#1E1E1E"

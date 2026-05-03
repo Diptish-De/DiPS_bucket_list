@@ -47,15 +47,15 @@ class SplashWrapper extends StatefulWidget {
 
 class _SplashWrapperState extends State<SplashWrapper> with SingleTickerProviderStateMixin {
   bool _showSplash = true;
-  late AnimationController _fadeCtrl;
-  late Animation<double> _fadeAnim;
+  late AnimationController _scaleCtrl;
+  late Animation<double> _scaleAnim;
 
   @override
   void initState() {
     super.initState();
-    _fadeCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
-    _fadeAnim = CurvedAnimation(parent: _fadeCtrl, curve: Curves.easeIn);
-    _fadeCtrl.forward();
+    _scaleCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
+    _scaleAnim = CurvedAnimation(parent: _scaleCtrl, curve: Curves.elasticOut);
+    _scaleCtrl.forward();
 
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) setState(() => _showSplash = false);
@@ -63,24 +63,27 @@ class _SplashWrapperState extends State<SplashWrapper> with SingleTickerProvider
   }
 
   @override
-  void dispose() { _fadeCtrl.dispose(); super.dispose(); }
+  void dispose() { _scaleCtrl.dispose(); super.dispose(); }
 
   @override
   Widget build(BuildContext context) {
     if (_showSplash) {
       return Scaffold(
         backgroundColor: const Color(0xFF1E1E1E),
-        body: Center(child: FadeTransition(opacity: _fadeAnim, child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Container(
-            width: 90, height: 90,
-            decoration: BoxDecoration(color: const Color(0xFFFF6D3B), borderRadius: BorderRadius.circular(24)),
-            child: const Icon(Icons.savings, size: 48, color: Colors.white),
+        body: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+          ScaleTransition(
+            scale: _scaleAnim,
+            child: Container(
+              width: 90, height: 90,
+              decoration: BoxDecoration(color: const Color(0xFFFF6D3B), borderRadius: BorderRadius.circular(24)),
+              child: const Icon(Icons.savings, size: 48, color: Colors.white),
+            ),
           ),
           const SizedBox(height: 24),
           const Text('DiPS Bucket List', style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900, letterSpacing: -0.5)),
           const SizedBox(height: 8),
           const Text('Save smart. Buy happy.', style: TextStyle(color: Colors.white38, fontSize: 14, fontWeight: FontWeight.w500)),
-        ]))),
+        ])),
       );
     }
 
