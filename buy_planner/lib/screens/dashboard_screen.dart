@@ -210,7 +210,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Icon(Icons.drag_indicator, size: 13, color: Color(0xFFCCCCCC)),
             SizedBox(width: 4),
             Text('Hold & drag to set priority', style: TextStyle(fontSize: 10, color: Color(0xFFCCCCCC), fontWeight: FontWeight.w600)),
-          ])),
+          ]))
+        else
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: Column(children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset('assets/empty_doodle.png', width: 180, height: 180, fit: BoxFit.cover),
+              ),
+              const SizedBox(height: 16),
+              const Text('No goals yet!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Color(0xFF1A1A24))),
+              const SizedBox(height: 6),
+              const Text('Tap + to start saving for something awesome', style: TextStyle(fontSize: 13, color: Color(0xFF8A8A9E), fontWeight: FontWeight.w600)),
+            ]),
+          ),
         const SizedBox(height: 6),
       ]),
       itemCount: active.length,
@@ -248,7 +262,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
       const SizedBox(height: 20),
       Padding(padding: const EdgeInsets.symmetric(horizontal: 24), child: Row(children: [_tab('Your Goals', provider.activeItems.length, 0), const SizedBox(width: 24), _tab('Completed', completed.length, 1)])),
       const SizedBox(height: 12),
-      if (completed.isEmpty) const Padding(padding: EdgeInsets.only(top: 40), child: Center(child: Text('No completed goals yet.', style: TextStyle(color: Color(0xFF8A8A9E)))))
+      if (completed.isEmpty)
+        Padding(
+          padding: const EdgeInsets.only(top: 40),
+          child: Column(children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset('assets/completed_doodle.png', width: 180, height: 180, fit: BoxFit.cover),
+            ),
+            const SizedBox(height: 16),
+            const Text('Nothing here yet!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Color(0xFF1A1A24))),
+            const SizedBox(height: 6),
+            const Text('Complete a goal to see it here', style: TextStyle(fontSize: 13, color: Color(0xFF8A8A9E), fontWeight: FontWeight.w600)),
+          ]),
+        )
       else ...completed.map((item) => Padding(padding: const EdgeInsets.symmetric(horizontal: 20), child: ItemCard(item: item, onAddFunds: () {}, onDelete: () => provider.deleteItem(item.id), onTap: () => _showGoalDetail(item)))),
     ]);
   }

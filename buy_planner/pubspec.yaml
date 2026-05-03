@@ -1,5 +1,5 @@
 name: buy_planner
-description: "A new Flutter project."
+description: "DiPS Bucket List - Save smart. Buy happy."
 publish_to: 'none'
 version: 0.1.0+1
 
@@ -24,12 +24,17 @@ flutter:
   uses-material-design: true
   assets:
     - dips-img.png
+    - assets/splash_icon.png
+    - assets/empty_doodle.png
+    - assets/completed_doodle.png
 
 flutter_native_splash:
   color: "#1E1E1E"
-  image: dips-img.png
+  image: assets/splash_icon.png
   color_dark: "#1E1E1E"
-  image_dark: dips-img.png
+  image_dark: assets/splash_icon.png
   android_12:
     color: "#1E1E1E"
+    image: assets/splash_icon.png
     color_dark: "#1E1E1E"
+    image_dark: assets/splash_icon.png
