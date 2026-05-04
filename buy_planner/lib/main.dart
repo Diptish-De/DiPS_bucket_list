@@ -16,7 +16,7 @@ class BuyPlannerApp extends StatelessWidget {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => BuyProvider())],
       child: Consumer<BuyProvider>(builder: (context, provider, _) => MaterialApp(
-        title: 'DiPS Bucket List',
+        title: "DiPS' bucket",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true, brightness: Brightness.light,
