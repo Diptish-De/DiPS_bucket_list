@@ -92,6 +92,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
+  void _quickAddFunds(item, double amount) async {
+    final provider = Provider.of<BuyProvider>(context, listen: false);
+    double oldSaved = item.savedAmount;
+    bool completed = provider.addFunds(item.id, amount);
+    
+    HapticFeedback.lightImpact();
+    
+    int? milestone = provider.checkMilestoneCrossed(item.id, oldSaved);
+    if (milestone != null && !item.isCompleted) {
+      HapticFeedback.mediumImpact();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('🎯 ${item.name} hit $milestone%!', style: const TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFFFF6D3B), behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ));
+    }
+    
+    if (completed) {
+      HapticFeedback.heavyImpact();
+      Navigator.push(context, PageRouteBuilder(opaque: false, pageBuilder: (_, __, ___) => CelebrationScreen(goalName: item.name), transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c)));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<BuyProvider>(context);
@@ -168,7 +191,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildActiveTab(BuyProvider provider, NumberFormat fmt, Map<String, GoalAllocation> timelineMap, double overallProgress) {
-    final active = provider.activeItems;
+    final isDark = provider.isDarkMode;
+    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+
     return ReorderableListView.builder(
       padding: const EdgeInsets.only(bottom: 100),
       proxyDecorator: (child, index, animation) => AnimatedBuilder(animation: animation, builder: (_, child) => Material(elevation: 8, borderRadius: BorderRadius.circular(20), shadowColor: const Color(0xFFFF6D3B).withValues(alpha: 0.3), child: child), child: child),
@@ -177,22 +203,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Container(
           margin: const EdgeInsets.fromLTRB(20, 16, 20, 0),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(24), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 16, offset: const Offset(0, 6))]),
+          decoration: BoxDecoration(color: cardColor, borderRadius: BorderRadius.circular(24), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04), blurRadius: 16, offset: const Offset(0, 6))]),
           child: Column(children: [
             SizedBox(height: 90, width: 180, child: Stack(alignment: Alignment.bottomCenter, children: [
               CustomPaint(size: const Size(180, 90), painter: _GaugePainter(progress: overallProgress)),
               Column(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.stars_rounded, size: 28, color: Color(0xFFFF6D3B)),
-                Text('${(overallProgress * 100).toStringAsFixed(0)}%', style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: Colors.black, height: 1)),
+                Text('${(overallProgress * 100).toStringAsFixed(0)}%', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: textColor, height: 1)),
               ]),
             ])),
             const SizedBox(height: 24),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              _stat('Savings', fmt.format(provider.totalSaved), Colors.black),
-              Container(height: 24, width: 1, color: const Color(0xFFF0F0F5)),
-              _stat('Target', fmt.format(provider.totalTarget), Colors.black),
+              _stat('Savings', fmt.format(provider.totalSaved), textColor),
+              Container(height: 24, width: 1, color: isDark ? Colors.white10 : const Color(0xFFF0F0F5)),
+              _stat('Target', fmt.format(provider.totalTarget), textColor),
               if (provider.expectedMonthlySavings > 0 && provider.totalCompletionMonths > 0) ...[
-                Container(height: 24, width: 1, color: const Color(0xFFF0F0F5)),
+                Container(height: 24, width: 1, color: isDark ? Colors.white10 : const Color(0xFFF0F0F5)),
                 _stat('All Done', formatShortETA(provider.totalCompletionMonths), const Color(0xFFFF6D3B)),
               ],
             ]),
@@ -239,6 +265,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return Padding(key: ValueKey(item.id), padding: const EdgeInsets.symmetric(horizontal: 20), child: ItemCard(
           item: item, isTopPriority: i == 0, monthlyAllocation: alloc?.currentMonthlyAmount, completionMonths: alloc?.completionMonths,
           onAddFunds: () => _showAddFunds(item), onDelete: () => provider.deleteItem(item.id), onTap: () => _showGoalDetail(item),
+          onQuickSave: (amt) => _quickAddFunds(item, amt),
         ));
       },
     );

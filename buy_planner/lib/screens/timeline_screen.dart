@@ -16,8 +16,14 @@ class TimelineScreen extends StatelessWidget {
     final timeline = provider.calculateTimeline();
     final totalMonths = provider.totalCompletionMonths;
 
+    final isDark = provider.isDarkMode;
+    final bgColor = isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5);
+    final cardColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF1A1A24);
+    final subTextColor = isDark ? Colors.white70 : const Color(0xFF8A8A9E);
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: bgColor,
       body: Column(children: [
         // Header
         Container(
@@ -88,10 +94,10 @@ class TimelineScreen extends StatelessWidget {
                             margin: const EdgeInsets.only(bottom: 16),
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: cardColor,
                               borderRadius: BorderRadius.circular(20),
                               border: isFirst && !isCompleted ? Border.all(color: const Color(0xFFFF6D3B).withValues(alpha: 0.3), width: 1.5) : null,
-                              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4))],
+                              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04), blurRadius: 10, offset: const Offset(0, 4))],
                             ),
                             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                               // Header row
@@ -103,7 +109,7 @@ class TimelineScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                  Text(item.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: isCompleted ? const Color(0xFF8A8A9E) : const Color(0xFF1A1A24))),
+                                  Text(item.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: isCompleted ? subTextColor : textColor)),
                                   Text(item.category, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: cat.color)),
                                 ])),
                                 if (isFirst && !isCompleted)
@@ -124,19 +130,19 @@ class TimelineScreen extends StatelessWidget {
 
                               // Stats
                               Row(children: [
-                                _miniStat('Saved', fmt.format(item.savedAmount)),
+                                _miniStat('Saved', fmt.format(item.savedAmount), textColor),
                                 const SizedBox(width: 16),
-                                _miniStat('Remaining', fmt.format(item.remaining)),
+                                _miniStat('Remaining', fmt.format(item.remaining), textColor),
                                 const Spacer(),
                                 if (alloc.currentMonthlyAmount > 0 && !isCompleted)
-                                  _miniStat('Per Month', fmt.format(alloc.currentMonthlyAmount)),
+                                  _miniStat('Per Month', fmt.format(alloc.currentMonthlyAmount), textColor),
                               ]),
 
                               if (!isCompleted && alloc.completionMonths > 0) ...[
                                 const SizedBox(height: 12),
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                  decoration: BoxDecoration(color: const Color(0xFFFFF8F5), borderRadius: BorderRadius.circular(10)),
+                                  decoration: BoxDecoration(color: const Color(0xFFFF6D3B).withValues(alpha: isDark ? 0.1 : 0.05), borderRadius: BorderRadius.circular(10)),
                                   child: Row(children: [
                                     const Icon(Icons.schedule, size: 14, color: Color(0xFFFF6D3B)),
                                     const SizedBox(width: 6),
@@ -171,8 +177,8 @@ class TimelineScreen extends StatelessWidget {
     );
   }
 
-  Widget _miniStat(String label, String value) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  Widget _miniStat(String label, String value, Color textColor) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Color(0xFFBBBBCC))),
-    Text(value, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: Color(0xFF1A1A24))),
+    Text(value, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: textColor)),
   ]);
 }

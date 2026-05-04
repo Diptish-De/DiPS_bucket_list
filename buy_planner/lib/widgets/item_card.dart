@@ -9,13 +9,14 @@ class ItemCard extends StatelessWidget {
   final VoidCallback onAddFunds;
   final VoidCallback onDelete;
   final VoidCallback? onTap;
+  final Function(double)? onQuickSave;
   final double? monthlyAllocation;
   final double? completionMonths;
   final bool isTopPriority;
 
   const ItemCard({
     super.key, required this.item, required this.onAddFunds, required this.onDelete,
-    this.onTap, this.monthlyAllocation, this.completionMonths, this.isTopPriority = false,
+    this.onQuickSave, this.onTap, this.monthlyAllocation, this.completionMonths, this.isTopPriority = false,
   });
 
   @override
@@ -115,18 +116,36 @@ class ItemCard extends StatelessWidget {
                   ],
                 ]),
                 // Milestone info
-                if (!item.isCompleted && item.lastMilestonePercent < 100) ...[
-                  const SizedBox(height: 6),
+                if (!item.isCompleted) ...[
+                  const SizedBox(height: 12),
                   Row(children: [
-                    Text('Next: ${item.nextMilestonePercent}%', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Color(0xFF8A8A9E))),
-                    const SizedBox(width: 6),
-                    Text('(${fmt.format(item.amountToNextMilestone)} more)', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Color(0xFFBBBBCC))),
+                    _quickSaveChip(100, fmt),
+                    const SizedBox(width: 8),
+                    _quickSaveChip(500, fmt),
+                    const SizedBox(width: 8),
+                    _quickSaveChip(1000, fmt),
+                    const Spacer(),
+                    Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                      Text('Next: ${item.nextMilestonePercent}%', style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: Color(0xFF8A8A9E))),
+                      Text('${fmt.format(item.amountToNextMilestone)} left', style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: Color(0xFFBBBBCC))),
+                    ]),
                   ]),
                 ],
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _quickSaveChip(double amount, NumberFormat fmt) {
+    return GestureDetector(
+      onTap: () => onQuickSave?.call(amount),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(color: const Color(0xFFF8F9FA), borderRadius: BorderRadius.circular(8), border: Border.all(color: const Color(0xFFEEEEEE))),
+        child: Text('+${fmt.format(amount)}', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF1A1A24))),
       ),
     );
   }
